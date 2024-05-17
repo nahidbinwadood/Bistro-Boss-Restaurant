@@ -1,0 +1,8 @@
+.spacing{
+    letter-spacing: 8px;
+}
+@media screen and (max-width:600px){
+    .spacing{
+    letter-spacing: 2px;
+}
+}
