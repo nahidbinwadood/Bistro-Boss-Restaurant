@@ -1,12 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import { HiOutlineMenu } from "react-icons/hi";
 import "./navbar.css";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { useState } from "react";
+import useAuth from "../../AuthProvider/useAuth";
 const Navbar = () => {
-  const [user, setUser] = useState(true);
-  console.log(setUser);
+  const {user,loading}=useAuth();
+  console.log(loading);
+ 
   const [clicked, setClicked] = useState(false);
   const handleToggle = () => {
     setClicked(!clicked);
@@ -85,13 +87,11 @@ const Navbar = () => {
             <div className="hidden lg:flex">
               {user ? (
                 <div className="flex items-center gap-4">
-                  <h2>SIGN OUT</h2>
+                  <Link to="/login">SIGN OUT</Link>
                   <div className="w-10">
                     <img
                       className="rounded-full cursor-pointer transition hover:scale-95"
-                      src={
-                        "https://scontent.fdac5-1.fna.fbcdn.net/v/t39.30808-1/439011287_2066347377098548_8157686076250003447_n.jpg?stp=c0.18.160.160a_dst-jpg_p160x160&_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFoPHVS4MuUjKpaqCTRTXs49jcT3sWeuaL2NxPexZ65ouVvTeRM_qclM__aZCXcZCV-WlHLC1H49ESy2oFGMoYx&_nc_ohc=AV7OUhSGzOoQ7kNvgFrJV_p&_nc_ht=scontent.fdac5-1.fna&oh=00_AYBe6yjJQxuGcl_CPVxSJQf77puCUQ7WMziBD_-k9XipVA&oe=664C458B"
-                      }
+                      src={user.photoURL}
                       alt={"displayName"}
                     />
                   </div>

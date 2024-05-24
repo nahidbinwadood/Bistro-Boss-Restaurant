@@ -4,7 +4,7 @@ const MenuComponent = ({data}) => {
   const {image,recipe,price,name}=data;
   return (
     <div>
-      <div className="flex">
+      <div className="flex gap-4 md:gap-0">
         <div>
           <img
             className="size-24"
@@ -15,7 +15,7 @@ const MenuComponent = ({data}) => {
         </div>
         <div className="flex w-3/4 mx-auto ">
           <div className="space-y-2">
-            <h2 className="font-cinzel text-xl">
+            <h2 className="font-cinzel md:text-xl">
               {" "}
               {name} ------------------
             </h2>
