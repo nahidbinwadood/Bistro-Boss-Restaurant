@@ -4,7 +4,6 @@ import Footer from "./../Shared/Footer/Footer";
 
 const MainLayout = () => {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <div>
       <ScrollRestoration />

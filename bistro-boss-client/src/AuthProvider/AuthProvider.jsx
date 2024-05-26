@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { auth } from "./../Firebase/Firebase.config";
 import {
-    FacebookAuthProvider,
-    GithubAuthProvider,
-    GoogleAuthProvider,
+  FacebookAuthProvider,
+  GithubAuthProvider,
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -11,23 +11,33 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 export const AuthContext = createContext(null);
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const axiosPublic = useAxiosPublic();
 
   //Observer:
-useEffect(()=>{
- const unSubscribe=onAuthStateChanged(auth, (user) => {
-    if (user) {
-        setUser(user);
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      if (user) {
+        const userInfo = { email: user.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            console.log(res.data.token);
+            localStorage.setItem("access-token", res.data.token);
+          }
+        });
+      } else {
+        localStorage.removeItem("access-token");
       }
       setLoading(false);
- })
- return () => unSubscribe();
-},[])
+    });
+    return () => unSubscribe();
+  }, [axiosPublic]);
 
   //SignUp :
   const signUp = (email, password) => {
@@ -47,7 +57,6 @@ useEffect(()=>{
     setLoading(true);
     return signOut(auth).then(() => {});
   };
-  
 
   //Update Profile:
   const updateUserProfile = (name, email, image) => {
@@ -65,7 +74,7 @@ useEffect(()=>{
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
-  
+
   //Google:
   const googleLogIn = () => {
     setLoading(true);
@@ -91,7 +100,9 @@ useEffect(()=>{
     logIn,
     logOut,
     updateUserProfile,
-    googleLogIn,githubLogin,facebookLogin
+    googleLogIn,
+    githubLogin,
+    facebookLogin,
   };
   return (
     <AuthContext.Provider value={allValues}>{children}</AuthContext.Provider>

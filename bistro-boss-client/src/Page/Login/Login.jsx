@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import {   useState } from "react";
 import loginBg from "../../assets/others/authentication.png";
 import loginImg from "../../assets/others/authentication2.png";
-import { loadCaptchaEnginge, LoadCanvasTemplate } from "react-simple-captcha";
 import "./login.css";
 import {
   FaFacebookF,
@@ -14,41 +13,44 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from './../../AuthProvider/useAuth';
 import toast from "react-hot-toast";
-
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+ 
 
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const {user,logIn,googleLogIn }=useAuth();
   const navigate=useNavigate();
+ const axiosPublic=useAxiosPublic();
   const location= useLocation();
   const from=location.state?.from?.pathname || "/";
+
+
+
   // Google SignIn
   const handleGoogleSignIn = async () => {
     try {
       //firebase:
       const result = await googleLogIn();
-      console.log(result);
-
-      //Jwt:
-      // const { data } = await axios.post(
-      //   `${import.meta.env.VITE_API_URL}/jwt`,
-      //   { email: result?.user?.email },
-      //   { withCredentials: true }
-      // );
-      // console.log(data);
-      toast.success("You've been Logged In Successfully");
-      navigate(from);
+      console.log(result)
+      const userInfo = {
+        email: result.user.email,
+        name: result.user.displayName,
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        console.log(res.data);
+        toast.success("You've been Logged In Successfully");
+        navigate(from);
+      });
+       
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
     }
   };
 
-  useEffect(() => {
-    loadCaptchaEnginge(6);
-  }, []);
+ 
 
   //Form :
   const onSubmit = async(data) => {
@@ -56,12 +58,6 @@ const Login = () => {
     try {
       const result = await logIn(email, password);
       console.log(result);
-      // //Jwt:
-      // const { data } = await axios.post(
-      //   `${import.meta.env.VITE_API_URL}/jwt`,
-      //   { email: result?.user?.email },
-      //   { withCredentials: true }
-      // );
       console.log(data);
       navigate(location?.state || "/");
       toast.success("You've been Logged In Successfully");
@@ -70,9 +66,7 @@ const Login = () => {
       toast.error("Invalid credentials !");
     }
   };
- const handleCaptcha=(e)=>{
-  console.log(e.target.value);
- }
+
  if ( user) return;
   return (
     <div
@@ -140,31 +134,7 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full">
-                <div className="w-full space-y-2">
-                  <label>
-                    <LoadCanvasTemplate />
-                  </label>
-                </div>
-              </div>
-              <div className="w-full">
-                <textarea
-                  {...register("captcha", { required: true })}
-                  rows="1"
-                  cols="1"
-                  className="border  border-gray-300 p-4 rounded-md w-full resize"
-                  type="text"
-                  name="captcha"
-                  placeholder="Enter Captcha"
-                  id=""
-                />
-                <div className="flex ">
-                  <button onClick={handleCaptcha} className="font-bold text-white rounded-md bg-[#686663] px-4 py-2 md:px-6 md:py-2 transition">
-                    {" "}
-                    Validate
-                  </button>
-                </div>
-              </div>
+            
               <div>
                 <button  className="w-full cursor-pointer font-bold text-white bg-[#D1A054] px-4 py-2 md:px-8 md:py-4 transition">
                   Sign In{" "}
@@ -200,6 +170,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 

@@ -11,7 +11,7 @@ const Contact = () => {
     <div>
       <HeroBanner
         image={heroImg}
-        title="OUR SHOP"
+        title="CONTACT US"
         subtitle="Would you like to try a dish?"
       ></HeroBanner>
       <div className="container mx-auto px-4 lg:px-0">

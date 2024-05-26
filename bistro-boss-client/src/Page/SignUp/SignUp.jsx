@@ -5,35 +5,36 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "./../../AuthProvider/useAuth";
 import toast from "react-hot-toast";
-import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignUp = () => {
-  const { user,signUp, updateUserProfile,googleLogIn } = useAuth();
+  const { user, signUp, updateUserProfile, googleLogIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxiosPublic();
   const { register, handleSubmit } = useForm();
-
-  const handleGoogle=async()=>{
+  const axiosSecure = useAxiosSecure();
+  const handleGoogle = async () => {
     try {
       //firebase:
       const result = await googleLogIn();
       console.log(result);
-
-      //Jwt:
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/jwt`,
-        { email: result?.user?.email },
-        { withCredentials: true }
-      );
-      console.log(data);
-      toast.success("You've been Logged In Successfully");
-      navigate(location?.state || "/");
+      const userInfo = {
+        email: result.user.email,
+        name: result.user.displayName,
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        console.log(res.data);
+        toast.success("You've been Logged In Successfully");
+        navigate(location?.state || "/");
+      });
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
     }
-  }
-  const onSubmit = async(data) => {
+  };
+  const onSubmit = async (data) => {
     const { name, email, password } = data;
 
     if (password.length < 6) {
@@ -54,6 +55,16 @@ const SignUp = () => {
       const result = await signUp(email, password);
       console.log(result);
       await updateUserProfile(name, email);
+      const user = {
+        name,
+        email,
+      };
+      axiosSecure.post("/users", user).then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Account created Successfully");
+          navigate(location?.state || "/");
+        }
+      });
       // const { data } = await axios.post(
       //   `${import.meta.env.VITE_API_URL}/jwt`,
       //   {
@@ -62,14 +73,12 @@ const SignUp = () => {
       //   { withCredentials: true }
       // );
       // console.log(data);
-      toast.success("Account created Successfully");
-      navigate(location?.state || "/");
     } catch (err) {
       console.log(err);
       toast.error("Email Already In use !");
     }
   };
-  if ( user) return;
+  if (user) return;
   return (
     <div
       className="flex justify-center items-center min-h-screen"
@@ -162,7 +171,10 @@ const SignUp = () => {
                   <div className="p-4 rounded-full border-2 border-[#444]">
                     <FaFacebookF className="size-6 text-[#444]" />
                   </div>
-                  <div onClick={handleGoogle} className="p-4 rounded-full border-2 border-[#444]">
+                  <div
+                    onClick={handleGoogle}
+                    className="p-4 rounded-full border-2 border-[#444]"
+                  >
                     <FaGoogle className="size-6 text-[#444]" />
                   </div>
                   <div className="p-4 rounded-full border-2 border-[#444]">
