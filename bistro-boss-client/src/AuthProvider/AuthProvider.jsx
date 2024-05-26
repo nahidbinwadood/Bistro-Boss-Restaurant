@@ -43,9 +43,11 @@ useEffect(()=>{
 
   //LogOut:
   const logOut = () => {
+    setUser(null);
     setLoading(true);
-    return signOut(auth);
+    return signOut(auth).then(() => {});
   };
+  
 
   //Update Profile:
   const updateUserProfile = (name, email, image) => {

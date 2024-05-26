@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Title from "../../../Components/Title/Title";
 import MenuComponent from "../../../Shared/Menu/MenuComponent";
 import ViewButton from "../../../Components/ViewButton/ViewButton";
+import { Link } from 'react-router-dom';
 
 const FeaturedMenu = () => {
   const [menu, setMenu] = useState([]);
@@ -17,12 +18,12 @@ const FeaturedMenu = () => {
     <div className="container mx-auto">
       <Title subTitle={"Check it out"} title={"FROM OUR MENU"}></Title>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-4 lg:mx-0">
         {menu.map((data) => (
           <MenuComponent key={data.id} data={data}></MenuComponent>
         ))}
       </div>
-      <ViewButton text={"View Full  Menu"}></ViewButton>
+      <Link to="/our-menu"><ViewButton text={"View Full  Menu"}></ViewButton></Link>
     </div>
   );
 };

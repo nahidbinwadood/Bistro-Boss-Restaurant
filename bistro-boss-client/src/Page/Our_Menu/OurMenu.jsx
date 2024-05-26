@@ -9,12 +9,13 @@ import MenuComponent from "../../Shared/Menu/MenuComponent";
 import ViewButton from "../../Components/ViewButton/ViewButton";
 import ItemPage from "../../Components/ItemPage/ItemPage";
 import Title from "../../Components/Title/Title";
+import { Link } from "react-router-dom";
 
 const OurMenu = () => {
   const [offered, setOffered] = useState([]);
   console.log(offered);
   useEffect(() => {
-    fetch("menu.json")
+    fetch(`${import.meta.env.VITE_API_URL}/menu`)
       .then((res) => res.json())
       .then((data) => {
         setOffered(data);
@@ -36,13 +37,14 @@ const OurMenu = () => {
           ))}
       </div>
       <div className="my-12">
-        <ViewButton text={"ORDER YOUR FAVORITE FOOD"}></ViewButton>
+       <Link to="/our-shop/salad"> <ViewButton text={"ORDER YOUR FAVORITE FOOD"}></ViewButton></Link>
       </div>
 
       {/* Dessert */}
       <ItemPage
         image={dessertBg}
         title={"DESSERTS"}
+        page={"dessert"}
         subtitle={
           "Indulge in our decadent desserts, featuring rich chocolate cakes, creamy cheesecakes, and refreshing fruit tarts. Each treat is crafted to delight your taste buds and complete your perfect meal."
         }
@@ -53,6 +55,7 @@ const OurMenu = () => {
       {/* Pizza */}
       <ItemPage
         image={pizzaBg}
+        page={"pizza"}
         title={"Pizza"}
         subtitle={
           "Savor our pizzas, crafted with hand-tossed dough, premium toppings, and zesty sauces. From classic Margherita to gourmet specialties, each bite offers a perfect blend of flavors and freshness."
@@ -65,6 +68,7 @@ const OurMenu = () => {
       <ItemPage
         image={saladBg}
         title={"Salad"}
+        page={"salad"}
         subtitle={
           "Experience our vibrant salads, made with fresh, crisp greens, seasonal veggies, and flavorful dressings. Each bowl is a delightful mix of health and taste, perfect for a light and refreshing meal."
         }
@@ -75,6 +79,7 @@ const OurMenu = () => {
       {/* Soup */}
       <ItemPage
         image={soupBg}
+        page={"soup"}
         title={"Soup"}
         subtitle={
           "Warm up with our delicious soups, featuring rich broths, fresh ingredients, and bold flavors. From classic chicken noodle to creamy tomato bisque, each bowl is a comforting, hearty delight."

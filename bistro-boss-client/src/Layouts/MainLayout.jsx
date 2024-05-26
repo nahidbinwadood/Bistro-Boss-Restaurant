@@ -8,9 +8,9 @@ const MainLayout = () => {
   return (
     <div>
       <ScrollRestoration />
-      {location.pathname == "/login" || location.pathname == "/sign-up" ? "" : <Navbar></Navbar>}
+      {location.pathname == "/login" || location.pathname == "/sign-up" || location.pathname == "/dashboard/cart" ? "" : <Navbar></Navbar>}
       <Outlet></Outlet>
-      {location.pathname == "/login" || location.pathname == "/sign-up" ? "" :  <Footer></Footer>}
+      {location.pathname == "/login" || location.pathname == "/sign-up" || location.pathname == "/dashboard/cart" ? "" :  <Footer></Footer>}
      
     </div>
   );

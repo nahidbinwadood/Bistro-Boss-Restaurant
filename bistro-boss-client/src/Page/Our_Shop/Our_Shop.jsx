@@ -5,11 +5,16 @@ import "react-tabs/style/react-tabs.css";
 import "./Our_Shop.css";
 import { useEffect, useState } from "react";
 import ShopCard from "../../Components/ShopCard/ShopCard";
+import { useParams } from "react-router-dom";
 const Our_Shop = () => {
   const [items, setItems] = useState([]);
-  console.log(items);
+  const categories=["salad","pizza","soup","dessert","drinks"]
+  const {category}=useParams()
+  const initialIndex=categories.indexOf(category)
+  const [tabIndex,setTabIndex]=useState(initialIndex);
+
   useEffect(() => {
-    fetch("menu.json")
+    fetch(`${import.meta.env.VITE_API_URL}/menu`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
@@ -24,7 +29,7 @@ const Our_Shop = () => {
       ></HeroBanner>
 
       <div className="my-24 px-4 lg:px-0 container mx-auto">
-        <Tabs className="space-y-5">
+        <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)} className="space-y-5">
           <TabList className="flex mb-12 flex-wrap items-center justify-center uppercase font-inter font-medium md:text-xl">
             <Tab>Salad</Tab>
             <Tab>Pizza</Tab>

@@ -6,6 +6,11 @@ import Our_Shop from "../Page/Our_Shop/Our_Shop";
 import Contact from "../Page/Contact/Contact";
 import Login from "../Page/Login/Login";
 import SignUp from "../Page/SignUp/SignUp";
+import DashboardCart from "../Page/Dashboard/DashboardCart/DashboardCart";
+import Dashboard from "../Layouts/DashBoard";
+ 
+ 
+
 
 export const router = createBrowserRouter([
   {
@@ -21,21 +26,36 @@ export const router = createBrowserRouter([
         element: <OurMenu></OurMenu>,
       },
       {
-        path: "/our-shop",
-        element:<Our_Shop></Our_Shop>
+        path: "/our-shop/:category",
+        element: <Our_Shop></Our_Shop>,
       },
       {
         path: "/contact",
-        element:<Contact></Contact>
+        element: <Contact></Contact>,
       },
       {
         path: "/login",
-        element:<Login></Login>
+        element: <Login></Login>,
       },
       {
         path: "/sign-up",
-        element:<SignUp></SignUp>
+        element: <SignUp></SignUp>,
       },
+      {
+        path:"/dashboard/cart",
+        element:<DashboardCart></DashboardCart>
+      }
     ],
   },
+  {
+    path: 'dashboard',
+    element: <Dashboard></Dashboard>, 
+    children: [
+      {
+        path:"cart",
+        element:<DashboardCart></DashboardCart>
+      }
+    ]
+  }
+
 ]);

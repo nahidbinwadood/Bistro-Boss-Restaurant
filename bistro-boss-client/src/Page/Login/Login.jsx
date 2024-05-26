@@ -10,18 +10,20 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from './../../AuthProvider/useAuth';
 import toast from "react-hot-toast";
-import axios from "axios";
+
 
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [showPassword, setShowPassword] = useState(true);
-  const {logIn,googleLogIn }=useAuth();
+  const {user,logIn,googleLogIn }=useAuth();
   const navigate=useNavigate();
+  const location= useLocation();
+  const from=location.state?.from?.pathname || "/";
   // Google SignIn
   const handleGoogleSignIn = async () => {
     try {
@@ -30,14 +32,14 @@ const Login = () => {
       console.log(result);
 
       //Jwt:
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/jwt`,
-        { email: result?.user?.email },
-        { withCredentials: true }
-      );
-      console.log(data);
+      // const { data } = await axios.post(
+      //   `${import.meta.env.VITE_API_URL}/jwt`,
+      //   { email: result?.user?.email },
+      //   { withCredentials: true }
+      // );
+      // console.log(data);
       toast.success("You've been Logged In Successfully");
-      navigate(location?.state || "/");
+      navigate(from);
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
@@ -71,6 +73,7 @@ const Login = () => {
  const handleCaptcha=(e)=>{
   console.log(e.target.value);
  }
+ if ( user) return;
   return (
     <div
       className="flex justify-center items-center min-h-screen"

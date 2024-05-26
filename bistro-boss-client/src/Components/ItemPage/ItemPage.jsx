@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import MenuComponent from "../../Shared/Menu/MenuComponent";
 
 // eslint-disable-next-line react/prop-types
-const ItemPage = ({image,title,subtitle,offered,type}) => {
+const ItemPage = ({image,title,subtitle,offered,type,page}) => {
   return (
     <div className="my-16 space-y-4">
       <div
@@ -36,9 +37,9 @@ const ItemPage = ({image,title,subtitle,offered,type}) => {
           ))}
       </div>
       <div className="lg:w-full text-center font-inter mt-12">
-      <button className=" px-4 lg:px-8 py-4 rounded-xl font-inter outline-none border-2 border-t-0 border-r-0 border-l-0 border-b-[#000000] lg:text-xl hover:bg-[#1F2937] hover:text-white transition hover:border-b-[#1F2937]">
+      <Link to={`/our-shop/${page}`} className=" px-4 lg:px-8 py-4 rounded-xl font-inter outline-none border-2 border-t-0 border-r-0 border-l-0 border-b-[#000000] lg:text-xl hover:bg-[#1F2937] hover:text-white transition hover:border-b-[#1F2937]">
         {"ORDER YOUR FAVORITE FOOD"}
-      </button>
+      </Link>
     </div>
     </div>
   );

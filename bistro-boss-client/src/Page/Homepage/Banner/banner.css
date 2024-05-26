@@ -4,4 +4,9 @@
 .thumbs{
     text-align: center;
 }
-
+@media screen and (max-width:600px) 
+{
+    .slider-wrapper{
+    height: auto !important;
+}
+}

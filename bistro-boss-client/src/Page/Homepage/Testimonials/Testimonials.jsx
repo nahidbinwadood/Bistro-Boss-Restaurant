@@ -20,7 +20,7 @@ const Testimonials = () => {
   return (
     <div>
       <Title subTitle={"What Our Clients Say"} title={"TESTIMONIALS"}></Title>
-      <div className="container mx-auto">
+      <div className=" mx-auto">
         <div>
           <Swiper navigation={true}  loop={true} modules={[Autoplay,Navigation]} className="mySwiper -mt-12 mb-12 w-4/5 mx-auto">
             {reviews.map((review) => (
@@ -33,14 +33,14 @@ const Testimonials = () => {
                     />
                   </div>
                   <div className="w-full flex justify-center">
-                    <FaQuoteLeft className="size-20 text-black" />
+                    <FaQuoteLeft className="size-8 md:size-20 text-black" />
                   </div>
                 </div>
                 <div className="space-y-4 pt-5">
-                  <p className="font-inter w-2/3 text-lg mx-auto">
+                  <p className="font-inter md:w-2/3 md:text-lg md:mx-auto">
                     {review.details}
                   </p>
-                  <p className="text-[#CD9003]  text-3xl font-inter text-center">
+                  <p className="text-[#CD9003] text-2xl md:text-3xl font-inter text-center">
                     {review.name}
                   </p>
                 </div>

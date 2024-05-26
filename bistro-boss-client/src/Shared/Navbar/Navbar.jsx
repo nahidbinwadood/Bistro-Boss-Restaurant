@@ -5,11 +5,12 @@ import "./navbar.css";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { useState } from "react";
 import useAuth from "../../AuthProvider/useAuth";
+import profileImg from "../../assets/home/Microsoft_Account_Logo.svg"
+import useCart from "../../Hooks/useCart";
 const Navbar = () => {
-  const {user,loading}=useAuth();
-  console.log(loading);
- 
+  const {user,logOut}=useAuth();
   const [clicked, setClicked] = useState(false);
+  const [cart]=useCart();
   const handleToggle = () => {
     setClicked(!clicked);
   };
@@ -45,7 +46,7 @@ const Navbar = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard"
+                  to="/helo"
                   className={({ isActive }) =>
                     isActive ? "text-[#EEFF25]" : ""
                   }
@@ -65,7 +66,7 @@ const Navbar = () => {
               </li>
               <li>
                 <NavLink
-                  to="/our-shop"
+                  to="/our-shop/salad"
                   className={({ isActive }) =>
                     isActive ? "text-[#EEFF25]" : ""
                   }
@@ -74,9 +75,10 @@ const Navbar = () => {
                 </NavLink>
               </li>
             </ul>
-            <div className="p-2 bg-[#006837] cursor-pointer rounded-full">
-              <BsCart4 className="md:size-6 text-white" />
-            </div>
+            <Link to="/dashboard/cart" className="p-2 bg-[#006837] relative cursor-pointer rounded-full">
+              <BsCart4 className="md:size-8 text-white" />
+              <h2 className="absolute -bottom-2 -right-1 font-inter rounded-full px-2 py-1 text-sm font-bold bg-[#FF0000] text-black">{cart.length}</h2>
+            </Link>
             
             <div
               onClick={handleToggle}
@@ -85,20 +87,20 @@ const Navbar = () => {
               {clicked ? <HiOutlineMenu /> : <AiFillCloseSquare />}
             </div>
             <div className="hidden lg:flex">
-              {user ? (
+              {user?.email ? (
                 <div className="flex items-center gap-4">
-                  <Link to="/login">SIGN OUT</Link>
+                  <button onClick={logOut}>SIGN OUT</button>
                   <div className="w-10">
-                    <img
+                    <img title={user.displayName}
                       className="rounded-full cursor-pointer transition hover:scale-95"
-                      src={user.photoURL}
+                      src={user.photoURL ? user.photoURL : profileImg}
                       alt={"displayName"}
                     />
                   </div>
                 </div>
               ) : (
                 <div>
-                  <h2>SIGN IN</h2>
+                  <Link className="hover:text-[#EEFF25]" to="/login">SIGN IN</Link>
                 </div>
               )}
             </div>
@@ -108,9 +110,9 @@ const Navbar = () => {
       {!clicked ? <div className="md:hidden flex flex-col gap-2 py-4 items-center font-inter">
               <NavLink to="/">HOME</NavLink>
               <NavLink to="/contact" >CONTACT US</NavLink>
-              <NavLink to="/">DASHBOARD</NavLink>
-              <NavLink to="/">OUR MENU</NavLink>
-              <NavLink to="/">OUR SHOP</NavLink>
+              <NavLink to="/dashboard">DASHBOARD</NavLink>
+              <NavLink to="/our-menu">OUR MENU</NavLink>
+              <NavLink to="/our-shop">OUR SHOP</NavLink>
               {
                 user? <NavLink to="/">SIGN OUT </NavLink> : <NavLink to="/">SIGN UP</NavLink>
               }
