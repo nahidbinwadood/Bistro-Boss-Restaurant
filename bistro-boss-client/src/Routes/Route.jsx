@@ -11,6 +11,10 @@ import Dashboard from "../Layouts/DashBoard";
 import PrivateRoutes from "./PrivateRoutes";
 import All_Users from "../Page/Dashboard/Admin/All_Users/All_Users";
 import AdminRoutes from "./AdminRoutes";
+import Add_Items from "../Page/Dashboard/Admin/Add_Items/Add_Items";
+import AdminHome from "../Page/Dashboard/Admin/AdminHome/AdminHome";
+import Manage_Items from "../Page/Dashboard/Admin/Manage_Items/Manage_Items";
+import Update_Items from "../Page/Dashboard/Admin/Update_Items/Update_Items";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +68,39 @@ export const router = createBrowserRouter([
             <All_Users></All_Users>
           </AdminRoutes>
         ),
+      },
+      {
+        path: "admin-home",
+        element: (
+          <AdminRoutes>
+            <AdminHome></AdminHome>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "add-items",
+        element: (
+          <AdminRoutes>
+            <Add_Items></Add_Items>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "manage-items",
+        element: (
+          <AdminRoutes>
+            <Manage_Items></Manage_Items>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "update-items/:id",
+        element: (
+          <AdminRoutes>
+             <Update_Items></Update_Items>
+          </AdminRoutes>
+        ),
+        loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/menu/${params.id}`)
       },
     ],
   },
