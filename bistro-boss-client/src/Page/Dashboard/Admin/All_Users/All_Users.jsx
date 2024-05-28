@@ -10,16 +10,12 @@ const All_Users = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users",{
-        headers:{
-            authorization: `Bearer ${localStorage.getItem('access-token')}`
-        }
-      });
+      const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
 
-  const handleMakeAdmin = (id) => {
+  const handleMakeAdmin = (item) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -27,16 +23,16 @@ const All_Users = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText:  "Yes make him admin"
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.patch(`/users/admin/${id}`).then((res) => {
+        axiosSecure.patch(`/users/admin/${item._id}`).then((res) => {
           console.log(res.data);
           if (res.data.modifiedCount > 0) {
             refetch();
             Swal.fire({
               title: "Deleted!",
-              text: "Your file has been deleted.",
+              text: `${item.name} is now an Admin !`,
               icon: "success",
             });
            
@@ -105,7 +101,7 @@ const All_Users = () => {
                       {item.role == "admin" ? (
                         (<div className="btn">Admin</div>)
                       ) : (
-                        <button onClick={() => handleMakeAdmin(item._id)}>
+                        <button onClick={() => handleMakeAdmin(item)}>
                           <div className="bg-[#D1A054] p-4 rounded-md">
                             <FaUsers className="size-6 text-white" />
                           </div>

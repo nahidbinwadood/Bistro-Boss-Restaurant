@@ -14,11 +14,12 @@ import {
   ScrollRestoration,
   useLocation,
 } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
 const Dashboard = () => {
   const location = useLocation();
   const from = location.pathname;
 
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   return (
     <div className="h-[100vh] grid grid-cols-12">
       <ScrollRestoration></ScrollRestoration>

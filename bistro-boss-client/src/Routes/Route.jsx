@@ -10,6 +10,7 @@ import DashboardCart from "../Page/Dashboard/DashboardCart/DashboardCart";
 import Dashboard from "../Layouts/DashBoard";
 import PrivateRoutes from "./PrivateRoutes";
 import All_Users from "../Page/Dashboard/Admin/All_Users/All_Users";
+import AdminRoutes from "./AdminRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -55,10 +56,14 @@ export const router = createBrowserRouter([
         element: <DashboardCart></DashboardCart>,
       },
 
-      //Admin 
+      //Admin
       {
         path: "all-users",
-        element: <All_Users></All_Users>,
+        element: (
+          <AdminRoutes>
+            <All_Users></All_Users>
+          </AdminRoutes>
+        ),
       },
     ],
   },
