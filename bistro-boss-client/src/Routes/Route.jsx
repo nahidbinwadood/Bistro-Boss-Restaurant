@@ -6,7 +6,6 @@ import Our_Shop from "../Page/Our_Shop/Our_Shop";
 import Contact from "../Page/Contact/Contact";
 import Login from "../Page/Login/Login";
 import SignUp from "../Page/SignUp/SignUp";
-import DashboardCart from "../Page/Dashboard/DashboardCart/DashboardCart";
 import Dashboard from "../Layouts/DashBoard";
 import PrivateRoutes from "./PrivateRoutes";
 import All_Users from "../Page/Dashboard/Admin/All_Users/All_Users";
@@ -15,6 +14,12 @@ import Add_Items from "../Page/Dashboard/Admin/Add_Items/Add_Items";
 import AdminHome from "../Page/Dashboard/Admin/AdminHome/AdminHome";
 import Manage_Items from "../Page/Dashboard/Admin/Manage_Items/Manage_Items";
 import Update_Items from "../Page/Dashboard/Admin/Update_Items/Update_Items";
+import DashboardCart from "../Page/Dashboard/User/DashboardCart/DashboardCart";
+import Payment from "../Page/Dashboard/User/Payment/Payment";
+import UserHome from "../Page/Dashboard/User/Home/UserHome";
+import Reservation from "../Page/Dashboard/User/Reservation/Reservation";
+import Review from "../Page/Dashboard/User/Review/Review";
+import Booking from "../Page/Dashboard/User/Booking/Booking";
 
 export const router = createBrowserRouter([
   {
@@ -55,10 +60,32 @@ export const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
+      //users
+      {
+        path: "home",
+        element: <UserHome></UserHome> 
+      },  
+      {
+        path: "reservation",
+        element: <Reservation></Reservation>
+      },
+      {
+        path: "payment",
+        element: <Payment></Payment>
+      },
       {
         path: "cart",
-        element: <DashboardCart></DashboardCart>,
+        element: <DashboardCart></DashboardCart>
       },
+      {
+        path: "review",
+        element: <Review></Review>
+      },
+      {
+        path: "booking",
+        element: <Booking></Booking>
+      },
+
 
       //Admin
       {

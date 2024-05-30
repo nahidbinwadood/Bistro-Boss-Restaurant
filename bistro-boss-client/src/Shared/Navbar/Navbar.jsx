@@ -7,9 +7,11 @@ import { useState } from "react";
 import useAuth from "../../AuthProvider/useAuth";
 import profileImg from "../../assets/home/Microsoft_Account_Logo.svg"
 import useCart from "../../Hooks/useCart";
+import useAdmin from "../../Hooks/useAdmin";
 const Navbar = () => {
   const {user,logOut}=useAuth();
   const [clicked, setClicked] = useState(false);
+  const [isAdmin]=useAdmin();
   const [cart]=useCart();
   const handleToggle = () => {
     setClicked(!clicked);
@@ -46,7 +48,7 @@ const Navbar = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard/admin-home"
+                  to={isAdmin ? "/dashboard/admin-home" :"dashboard/home"}
                   className={({ isActive }) =>
                     isActive ? "text-[#EEFF25]" : ""
                   }
@@ -75,10 +77,12 @@ const Navbar = () => {
                 </NavLink>
               </li>
             </ul>
-            <Link to="/dashboard/cart" className="p-2 bg-[#006837] relative cursor-pointer rounded-full">
-              <BsCart4 className="md:size-8 text-white" />
-              <h2 className="absolute -bottom-2 -right-1 font-inter rounded-full px-2 py-1 text-sm font-bold bg-[#FF0000] text-black">{cart.length}</h2>
-            </Link>
+           { isAdmin ? "" :
+             <Link to="/dashboard/cart" className="p-2 bg-[#006837] relative cursor-pointer rounded-full">
+             <BsCart4 className="md:size-8 text-white" />
+             <h2 className="absolute -bottom-2 -right-1 font-inter rounded-full px-2 py-1 text-sm font-bold bg-[#FF0000] text-black">{cart.length}</h2>
+           </Link>
+           }
             
             <div
               onClick={handleToggle}

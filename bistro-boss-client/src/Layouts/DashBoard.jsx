@@ -1,9 +1,9 @@
 import { AiFillHome } from "react-icons/ai";
-import { FaBook, FaCalendarAlt,FaUsers,FaUtensils } from "react-icons/fa";
+import { FaBook, FaCalendarAlt, FaUsers, FaUtensils } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
-import review from "../assets/dashboard/review.png";
-import moneybag from "../assets/dashboard/moneybag.png";
-import bookings from "../assets/dashboard/online-booking 1.png";
+import { TbMessage2Star } from "react-icons/tb";
+import { IoIosWallet } from "react-icons/io";
+import { BsCalendarCheckFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { GiShoppingBag } from "react-icons/gi";
@@ -30,7 +30,6 @@ const Dashboard = () => {
           <h2 className="font-bold md:text-xl spacing">RESTAURANT</h2>
         </div>
         {isAdmin ? (
-
           // Admin Dashboard:
 
           <div className="font-cinzel  px-10 space-y-6">
@@ -119,12 +118,9 @@ const Dashboard = () => {
               />
               <h2 className="font-bold text-lg uppercase">All Users</h2>
             </NavLink>
-          
           </div>
-        ) :
-        
-        // User Dashboard
-        (
+        ) : (
+          // User Dashboard
           <div className="font-cinzel  px-12 space-y-6">
             <NavLink
               to="/dashboard/home"
@@ -168,8 +164,7 @@ const Dashboard = () => {
                   : "flex gap-3 items-center "
               }
             >
-              <img
-                src={moneybag}
+              <IoIosWallet
                 className={
                   from === "/dashboard/payment"
                     ? "size-7 text-white "
@@ -203,8 +198,7 @@ const Dashboard = () => {
                   : "flex gap-3 items-center "
               }
             >
-              <img
-                src={review}
+              <TbMessage2Star
                 className={
                   from === "/dashboard/review"
                     ? "size-7 text-white "
@@ -221,8 +215,7 @@ const Dashboard = () => {
                   : "flex gap-3 items-center "
               }
             >
-              <img
-                src={bookings}
+              <BsCalendarCheckFill
                 className={
                   from === "/dashboard/booking"
                     ? "size-7 text-white "
