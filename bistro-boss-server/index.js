@@ -227,7 +227,6 @@ async function run() {
       res.send(result)
     })
 
-
     //Payment:
     app.post("/create-payment-intent",async(req,res)=>{
       const {price}=req.body;
