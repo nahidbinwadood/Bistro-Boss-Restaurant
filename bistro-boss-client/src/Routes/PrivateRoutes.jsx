@@ -13,6 +13,7 @@ import useAuth from "../AuthProvider/useAuth";
         </div>
       );
     }
+    
     if (!user) {
       return <Navigate to="/login" state={location?.pathname || "/"} replace={true}></Navigate>;
     }
