@@ -3,7 +3,6 @@ import useAuth from "../AuthProvider/useAuth";
 import useAdmin from "../Hooks/useAdmin";
 import PropTypes from "prop-types";
 
- 
 const AdminRoutes = ({children}) => {
     const [isAdmin,isAdminLoading]=useAdmin();
     const { user, loading } = useAuth();
@@ -25,5 +24,4 @@ const AdminRoutes = ({children}) => {
 AdminRoutes.propTypes = {
     children: PropTypes.object.isRequired,
   };
- 
 export default AdminRoutes;
