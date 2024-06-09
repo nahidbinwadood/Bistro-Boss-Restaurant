@@ -24,4 +24,6 @@ const AdminRoutes = ({children}) => {
 AdminRoutes.propTypes = {
     children: PropTypes.object.isRequired,
   };
+
+  
 export default AdminRoutes;
